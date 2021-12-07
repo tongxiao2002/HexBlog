@@ -29,4 +29,10 @@ public class TagDO {
         this.name = name;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "tagId = " + this.tagId
+                + "\nname = " + this.name;
+    }
 }
