@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.townshaw.blog.mapper.TagMapper">
+
+    <sql id="FIELDS">
+        tag_id, name
+    </sql>
+
+    <insert id="insert" parameterType="TagDO">
+        INSERT INTO Tag(tag_id, name) VALUES (#{tagId}, #{name})
+    </insert>
+
+    <update id="updateById" parameterType="TagDO">
+        UPDATE Tag
+        <set>
+            <if test="name != null">
+                name = #{name}
+            </if>
+        </set>
+        WHERE tag_id = #{tagId}
+    </update>
+
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM Tag
+        WHERE tag_id = #{tagId}
+    </delete>
+
+    <resultMap id="TagMap" type="TagDO">
+        <result property="tagId" column="tag_id" />
+    </resultMap>
+
+    <select id="selectById" parameterType="String" resultMap="TagMap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM Tag
+        WHERE tag_id = #{tagId}
+    </select>
+
+    <select id="selectByName" parameterType="String" resultMap="TagMap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM Tag
+        WHERE name = #{name}
+    </select>
+
+    <select id="selectByIds" resultMap="TagMap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM Tag
+        WHERE tag_id IN
+        <foreach item="tagId" collection="tagIds" separator="," open="(" close=")" index="">
+            #{tagId}
+        </foreach>
+    </select>
+</mapper>

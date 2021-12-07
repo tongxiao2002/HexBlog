@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.townshaw.blog.mapper.ArticleMapper">
+
+    <sql id="FIELDS">
+        article_id, author, publish_date, title, stem
+    </sql>
+
+    <insert id="insert" parameterType="ArticleDO">
+        INSERT INTO Article(article_id, author, publish_date, title, stem) VALUES (#{articleId}, #{author}, #{publish_date}, #{title}, #{stem})
+    </insert>
+
+    <insert id="insertWithoutDate" parameterType="ArticleDO">
+        INSERT INTO Article(article_id, author, title, stem) VALUES (#{articleId}, #{author}, #{title}, #{stem})
+    </insert>
+
+    <update id="updateById" parameterType="ArticleDO">
+        UPDATE Article
+        <set>
+            <if test="author != null">
+                author = #{author}
+            </if>
+        </set>
+        WHERE article_id = #{articleId}
+    </update>
+
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM Article
+        WHERE article_id = #{articleId}
+    </delete>
+
+    <resultMap id="ArticleMap" type="ArticleDO">
+        <result property="articleId" column="article_id" />
+        <result property="publishDate" column="publish_date" />
+    </resultMap>
+    
+    <select id="selectById" parameterType="String" resultMap="ArticleMap">
+        SELECT
+            <include refid="FIELDS" />
+        FROM Article
+        WHERE article_id = #{articleId}
+    </select>
+
+    <select id="selectByAuthor" parameterType="String" resultMap="ArticleMap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM Article
+        WHERE author = #{author}
+    </select>
+
+    <select id="selectByIds" resultMap="ArticleMap">
+        SELECT
+            <include refid="FIELDS" />
+        FROM Article
+        WHERE article_id IN
+        <foreach item="articleId" collection="articleIds" separator="," open="(" close=")" index="">
+            #{articleId}
+        </foreach>
+    </select>
+</mapper>
