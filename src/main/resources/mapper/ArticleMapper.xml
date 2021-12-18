@@ -3,18 +3,22 @@
 <mapper namespace="com.townshaw.blog.mapper.ArticleMapper">
 
     <sql id="FIELDS">
-        article_id, author, publish_date, title, stem
+        article_id, author, title, stem, create_time, update_time
     </sql>
 
-    <insert id="insert" parameterType="ArticleDO">
-        INSERT INTO Article(article_id, author, publish_date, title, stem) VALUES (#{articleId}, #{author}, #{publish_date}, #{title}, #{stem})
-    </insert>
+    <resultMap id="articleResultMap" type="ArticleDO">
+        <result property="articleId" column="article_id" />
+    </resultMap>
 
-    <insert id="insertWithoutDate" parameterType="ArticleDO">
+    <parameterMap id="articleParamMap" type="ArticleDO">
+        <parameter property="articleId" javaType="String" />
+    </parameterMap>
+
+    <insert id="insert" parameterMap="articleParamMap">
         INSERT INTO Article(article_id, author, title, stem) VALUES (#{articleId}, #{author}, #{title}, #{stem})
     </insert>
 
-    <update id="updateById" parameterType="ArticleDO">
+    <update id="updateById" parameterMap="articleParamMap">
         UPDATE Article
         <set>
             <if test="author != null">
@@ -28,27 +32,30 @@
         DELETE FROM Article
         WHERE article_id = #{articleId}
     </delete>
-
-    <resultMap id="ArticleMap" type="ArticleDO">
-        <result property="articleId" column="article_id" />
-        <result property="publishDate" column="publish_date" />
-    </resultMap>
     
-    <select id="selectById" parameterType="String" resultMap="ArticleMap">
+    <select id="selectById" parameterType="String" resultMap="articleResultMap">
         SELECT
             <include refid="FIELDS" />
         FROM Article
         WHERE article_id = #{articleId}
     </select>
 
-    <select id="selectByAuthor" parameterType="String" resultMap="ArticleMap">
+    <insert id="addTagToArticle">
+        INSERT INTO ArticleTagRel
+        <set>
+            article_id = #{articleId}
+            tag_id = #{tagId}
+        </set>
+    </insert>
+
+    <select id="selectByAuthor" parameterType="String" resultMap="articleResultMap">
         SELECT
         <include refid="FIELDS" />
         FROM Article
         WHERE author = #{author}
     </select>
 
-    <select id="selectByIds" resultMap="ArticleMap">
+    <select id="selectByIds" resultMap="articleResultMap">
         SELECT
             <include refid="FIELDS" />
         FROM Article
@@ -56,5 +63,10 @@
         <foreach item="articleId" collection="articleIds" separator="," open="(" close=")" index="">
             #{articleId}
         </foreach>
+    </select>
+
+    <select id="getArticleTags" resultMap="articleResultMap">
+        SELECT tag_id FROM ArticleTagRel
+        WHERE article_id = #{articleId}
     </select>
 </mapper>

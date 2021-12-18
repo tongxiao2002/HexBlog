@@ -3,18 +3,28 @@
 <mapper namespace="com.townshaw.blog.mapper.TagMapper">
 
     <sql id="FIELDS">
-        tag_id, name
+        tag_id, tag_name, create_time, update_time
     </sql>
 
-    <insert id="insert" parameterType="TagDO">
-        INSERT INTO Tag(tag_id, name) VALUES (#{tagId}, #{name})
+    <resultMap id="tagResultMap" type="TagDO">
+        <result property="tagId" column="tag_id" />
+        <result property="tagName" column="tag_name" />
+    </resultMap>
+
+    <parameterMap id="tagParamMap" type="TagDO">
+        <parameter property="tagId" javaType="String" />
+        <parameter property="tagName" javaType="String" />
+    </parameterMap>
+
+    <insert id="insert" parameterMap="tagParamMap">
+        INSERT INTO Tag(tag_id, tag_name) VALUES (#{tagId}, #{tagName})
     </insert>
 
-    <update id="updateById" parameterType="TagDO">
+    <update id="updateById" parameterMap="tagParamMap">
         UPDATE Tag
         <set>
             <if test="name != null">
-                name = #{name}
+                tagName = #{tagName}
             </if>
         </set>
         WHERE tag_id = #{tagId}
@@ -25,22 +35,18 @@
         WHERE tag_id = #{tagId}
     </delete>
 
-    <resultMap id="TagMap" type="TagDO">
-        <result property="tagId" column="tag_id" />
-    </resultMap>
-
-    <select id="selectById" parameterType="String" resultMap="TagMap">
+    <select id="selectById" parameterType="String" resultMap="tagResultMap">
         SELECT
         <include refid="FIELDS" />
         FROM Tag
         WHERE tag_id = #{tagId}
     </select>
 
-    <select id="selectByName" parameterType="String" resultMap="TagMap">
+    <select id="selectByName" parameterType="String" resultMap="tagResultMap">
         SELECT
         <include refid="FIELDS" />
         FROM Tag
-        WHERE name = #{name}
+        WHERE tag_name = #{tagName}
     </select>
 
     <select id="selectByIds" resultMap="TagMap">

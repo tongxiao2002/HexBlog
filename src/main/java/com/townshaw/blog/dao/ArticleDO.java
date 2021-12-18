@@ -1,8 +1,7 @@
 package com.townshaw.blog.dao;
 
-import java.util.Date;
-import java.util.Objects;
 import java.util.UUID;
+import java.util.Date;
 
 public class ArticleDO {
     /**
@@ -10,13 +9,9 @@ public class ArticleDO {
      */
     private String articleId;
     /**
-     * Author type: string
+     * Author type: String
      */
     private String author;
-    /**
-     * publish_date type: Date
-     */
-    private Date publishDate;
     /**
      * Title type: String
      */
@@ -25,35 +20,66 @@ public class ArticleDO {
      * stem type: String
      */
     private String stem;
+    /**
+     * createTime type: Date
+     */
+    private Date createTime;
+    /**
+     * updateTime type: Date
+     */
+    private Date updateTime;
 
+    /**
+     * no-parameter constructor
+     */
     public ArticleDO() {
         this.articleId = "";
         this.author = "";
-        this.publishDate = new Date();
         this.title = "";
         this.stem = "";
+        this.createTime = null;
+        this.updateTime = null;
     }
 
-    public ArticleDO(UUID articleId, String author, Date publishDate, String title, String stem) {
-        this.articleId = Objects.requireNonNullElseGet(articleId, UUID::randomUUID).toString();
+    /**
+     * articleId, create_time, update_time will auto-generate by database(articleId by java), user needn't provide.
+     * This constructor is used to provide date object to database.
+     * @param author        author name
+     * @param title         title of the article
+     * @param stem          stem of the article (MarkDown text)
+     */
+    public ArticleDO(String author, String title, String stem) {
+        this.articleId = UUID.randomUUID().toString();
         this.author = author;
-        this.publishDate = publishDate;
         this.title = title;
         this.stem = stem;
+        this.createTime = null;
+        this.updateTime = null;
     }
 
-    public ArticleDO(UUID articleId, String author, String title, String stem) {
-        this.articleId = Objects.requireNonNullElseGet(articleId, UUID::randomUUID).toString();
+    /**
+     * constructor that user provide all the parameter, will not be used to communicate with db in this application.
+     * @param articleId     articleId
+     * @param author        author name
+     * @param title         title of the article
+     * @param stem          steam of the article
+     * @param createTime    create time of the article
+     * @param updateTime    last update time of the article
+     */
+    public ArticleDO(String articleId, String author, String title, String stem, Date createTime, Date updateTime) {
+        this.articleId = articleId;
         this.author = author;
         this.title = title;
         this.stem = stem;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
-    public String getArticle_id() {
+    public String getArticleId() {
         return this.articleId;
     }
 
-    public ArticleDO setArticle_id(String articleId) {
+    public ArticleDO setArticleId(String articleId) {
         this.articleId = articleId;
         return this;
     }
@@ -64,15 +90,6 @@ public class ArticleDO {
 
     public ArticleDO setAuthor(String author) {
         this.author = author;
-        return this;
-    }
-
-    public Date getPublish_date() {
-        return this.publishDate;
-    }
-
-    public ArticleDO setPublish_date(String publishDate) {
-        this.publishDate = new Date();
         return this;
     }
 
@@ -94,12 +111,32 @@ public class ArticleDO {
         return this;
     }
 
+
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    public ArticleDO setCreateTime(Date createTime) {
+        this.createTime = createTime;
+        return this;
+    }
+
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public ArticleDO setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "articleId = " + this.articleId
                 + "\nauthor = " + this.author
-                + "\npublishDate = " + this.publishDate.toString()
                 + "\ntitle = " + this.title
-                + "\nstem = " + this.stem;
+                + "\nstem = " + this.stem
+                + "\ncreateTime = " + this.createTime.toString()
+                + "\nupdateTime = " + this.updateTime.toString();
     }
 }
