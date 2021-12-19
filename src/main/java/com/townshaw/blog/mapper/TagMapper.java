@@ -9,6 +9,17 @@ import java.util.List;
 
 @Repository
 public interface TagMapper {
-    public TagDO selectByName(String tagName);
+
+    int insert(TagDO tagDO);
+
+    int updateById(TagDO tagDO);
+
+    int deleteById(@Param("tagId") String tagId);
+
+    int selectById(@Param("tagId") String tagId);
+
+    TagDO selectByName(@Param("tagName") String tagName);
+
+    List<TagDO> selectByIds(@Param("tagIds") Collection<String> tagIds);
 
 }

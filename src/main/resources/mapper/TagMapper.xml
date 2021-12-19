@@ -49,7 +49,7 @@
         WHERE tag_name = #{tagName}
     </select>
 
-    <select id="selectByIds" resultMap="TagMap">
+    <select id="selectByIds" resultMap="tagResultMap">
         SELECT
         <include refid="FIELDS" />
         FROM Tag

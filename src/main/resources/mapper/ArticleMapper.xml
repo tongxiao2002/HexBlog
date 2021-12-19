@@ -65,6 +65,12 @@
         </foreach>
     </select>
 
+    <select id="selectAllArticle" resultMap="articleResultMap">
+        SELECT <include refid="FIELDS" />
+        FROM Article
+        ORDER BY create_time DESC
+    </select>
+
     <select id="getArticleTags" resultMap="articleResultMap">
         SELECT tag_id FROM ArticleTagRel
         WHERE article_id = #{articleId}

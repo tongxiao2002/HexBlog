@@ -20,6 +20,10 @@ public class ArticleService {
     @Autowired
     TagMapper tagMapper;
 
+    public List<ArticleDO> getAllArticle() {
+        return articleMapper.selectAllArticle();
+    }
+
     public ArticleDO getArticleById(String articleId) {
         return articleMapper.selectById(articleId);
     }

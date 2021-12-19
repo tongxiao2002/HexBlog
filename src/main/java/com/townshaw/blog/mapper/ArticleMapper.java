@@ -23,6 +23,8 @@ public interface ArticleMapper {
 
     ArticleDO selectByAuthor(@Param("author") String author);
 
+    List<ArticleDO> selectAllArticle();
+
     List<ArticleDO> selectByIds(@Param("articleIds") Collection<String> articleIds);
 
     List<String> getArticleTags(@Param("articleId") String articleId);

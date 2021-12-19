@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import com.townshaw.blog.dao.ArticleDO;
 import com.townshaw.blog.service.ArticleService;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 @ResponseBody
@@ -22,6 +23,13 @@ public class ArticleController {
         int statusCode = articleService.addNewArticle(article);
         return statusCode;
     }
+
+    @CrossOrigin
+    @GetMapping("/fetchall")
+    public List<ArticleDO> getAllArticle() {
+        return articleService.getAllArticle();
+    }
+
     @CrossOrigin
     @GetMapping("/{articleId}")
     public ArticleDO getArticleById(@PathVariable String articleId) {
