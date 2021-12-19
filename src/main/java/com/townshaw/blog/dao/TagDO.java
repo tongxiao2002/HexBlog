@@ -78,9 +78,12 @@ public class TagDO {
 
     @Override
     public String toString() {
-        return "tagId = " + this.tagId
-                + "\nname = " + this.tagName
-                + "\ncreateTime = " + this.createTime.toString()
-                + "\nupdateTime = " + this.updateTime.toString();
+        String str = "tagId = " + this.tagId
+                     + "\ntagName = " + this.tagName
+                     + "\ncreateTime = " + this.createTime.toString();
+        if (this.updateTime != null) {
+            str += "\nupdateTime = " + this.updateTime.toString();
+        }
+        return str;
     }
 }

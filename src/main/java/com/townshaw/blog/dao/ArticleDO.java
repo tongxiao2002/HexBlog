@@ -132,11 +132,14 @@ public class ArticleDO {
 
     @Override
     public String toString() {
-        return "articleId = " + this.articleId
-                + "\nauthor = " + this.author
-                + "\ntitle = " + this.title
-                + "\nstem = " + this.stem
-                + "\ncreateTime = " + this.createTime.toString()
-                + "\nupdateTime = " + this.updateTime.toString();
+        String str = "articleId = " + this.articleId
+                     + "\nauthor = " + this.author
+                     + "\ntitle = " + this.title
+                     + "\nstem = " + this.stem
+                     + "\ncreateTime = " + this.createTime.toString();
+        if (this.updateTime != null) {
+            str += "\nupdateTime = " + this.updateTime.toString();
+        }
+        return str;
     }
 }
