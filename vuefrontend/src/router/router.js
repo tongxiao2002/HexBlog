@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Article from '../components/Article.vue'
-import Home from '../views/Home.vue'
+import HomePage from '../views/HomePage.vue'
 
 Vue.use(Router)
 
@@ -10,14 +9,7 @@ export default new Router({
         {
             path: '/',
             name: '首页',
-            component: Home
-        },
-        {
-            path: '/article',
-            name: '文章',
-            component: function() {
-                return import("../components/Article.vue")
-            }
+            component: HomePage
         },
         {
             path: '/test',
