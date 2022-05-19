@@ -1,7 +1,7 @@
 <template>
     <div id="sideNav" class="sidenav">
       <div id="introduction" class="intro">
-        <img src="../../static/images/wallhaven-3kp6yv.png" align="center">
+        <img src="../../../static/images/wallhaven-3kp6yv.png" align="center">
         <h1 align="center">{{ author }}</h1>     <!-- Author Name -->
         <p align="center">{{ introduction }}</p>    <!-- Author's introduction -->
         <i class="fa fa-github"></i>

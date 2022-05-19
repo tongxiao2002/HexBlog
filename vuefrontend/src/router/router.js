@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomePage from '../views/HomePage.vue'
+import Home from '../views/Home.vue'
 
 Vue.use(Router)
 
@@ -9,7 +9,7 @@ export default new Router({
         {
             path: '/',
             name: '首页',
-            component: HomePage
+            component: Home
         },
         {
             path: '/test',

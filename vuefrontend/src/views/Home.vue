@@ -1,14 +1,14 @@
 <template>
   <div id="homepage" class="homepage">
-    <navigation id="naviBar"></navigation>    <!-- 导航栏 -->
-    <ArticleColumn id="articleColumn"></ArticleColumn>
+    <Sidebar id="sideBar"/>    <!-- 导航栏 -->
+    <ArticleColumn id="articleColumn"/>
   </div>
 </template>
 
 <script>
 
-import navigation from '../components/navigation.vue'
-import ArticleColumn from '../components/ArticleColumn.vue'
+import Sidebar from '../components/Home/TheSidebar.vue'
+import ArticleColumn from '../components/Home/ArticleColumn.vue'
 
 export default {
   name: "HomePage",
@@ -21,7 +21,7 @@ export default {
 
   },
   components: {
-    navigation,
+    Sidebar,
     ArticleColumn
   },
 }
